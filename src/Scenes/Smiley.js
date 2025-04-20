@@ -58,33 +58,17 @@ class Smiley extends Phaser.Scene {
         // Since sprites are visible when created and we only want one smile to be shown
         // at a time, make the "dimple" smile not visible to start.
         my.sprite.dimple.visible = false;
+        //M polling
+        this.mKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     }
 
     update() {
         let my = this.my;    // create an alias to this.my for readability
 
-        // Since update is called multiple times/second, this.counter acts like
-        // a timer, increasing once per clock tick
-        this.counter++;
-
-        if (this.counter % 120 == 0) {  // Do this once every 120 calls to update()
-            switch (this.smileType) {
-                case "Smile":
-                    // Currently a regular smile, so change to dimple smile
-                    this.smileType = "Dimple";
-                    my.sprite.smile.visible = false;
-                    my.sprite.dimple.visible = true;
-                    break;
-                case "Dimple":
-                    // Currently a dimple smile, so change to regular smile
-                    this.smileType = "Smile";
-                    my.sprite.dimple.visible = false;
-                    my.sprite.smile.visible = true;
-                    break;
-                default:
-                    console.log("Error: unknown smile");
-            }
+        if (Phaser.Input.Keyboard.JustDown(this.mKey)) {
+            this.scene.start("mouseSmiley");
         }
+        
     }
 
 }
